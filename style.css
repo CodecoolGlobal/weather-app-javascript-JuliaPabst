@@ -1,5 +1,16 @@
+body {
+    text-align: center;
+    display: block;
+    margin: auto;
+}
+
 input{
     text-align: center;
     display: block;
     margin: auto;
+}
+
+label {
+    text-align: center;
+    display: block;
 }
