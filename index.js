@@ -19,13 +19,6 @@ const insertOptionElement = (cityName) => {
     cities.appendChild(createFormWithInput(cityName));
 };
 
-// const cityNames = new Set(cities.map(city => city.name));
-
-// console.log(cityNames);
-// cityNames.forEach(city => {
-//     insertOptionElement(city);
-// });
-
 const createImage = (url) => {
     const img = document.createElement("img");
     img.src = url;
@@ -49,26 +42,6 @@ const insertWeatherData = (weatherInCelsius, weatherInFahrenheit, name, url) => 
 
     chosenWeather.appendChild(div);
 };
-
-// input.addEventListener("keypress", event => {
-        
-//     if(event.key === "Enter") {
-//         selectedCity = event.target.value;
-//         document.querySelector("h1").remove();
-//         document.querySelector("#celsius").remove();
-//         document.querySelector("img").remove();
-
-//         fetch(`https://api.weatherapi.com/v1/current.json?key=ef3f93021b5549f6866100215232103&q=${selectedCity}`)
-//         .then(response => response.json())
-//         .then(data => {
-//             const image = "https:" + data.current.condition.icon
-
-//             insertWeatherData(data.current.feelslike_c, data.location.name, image);
-//         });
-//     }
-// });
-
-
 
 fetch(searchApiUrl)
     .then(response => response.json())
