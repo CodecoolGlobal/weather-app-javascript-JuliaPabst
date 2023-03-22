@@ -1,11 +1,11 @@
 const root = document.querySelector("#root");
 const input = document.querySelector("input");
 const chosenWeather = document.getElementById("chosen-weather");
-let selectedCity = 'Vie';
 const apiKey = "ef3f93021b5549f6866100215232103";
 const searchApiUrl = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=`;
 const currentApiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=`;
 const datalistCities = document.getElementById("cities");
+let selectedCity = 'Vie';
 
 const createFormWithInput = (cityName) => {
     const option = document.createElement("option");
@@ -61,7 +61,7 @@ fetch(searchApiUrl)
                         });
                     }
                 })
-        })
+        });
 
         input.addEventListener("keypress", event => {
             if(event.key === "Enter") {
@@ -76,7 +76,6 @@ fetch(searchApiUrl)
                         chosenWeather.replaceChildren();
                         insertWeatherData(data.current.feelslike_c, data.current.feelslike_f, data.location.name, image);
                     })
-            
             }
         });
     });
