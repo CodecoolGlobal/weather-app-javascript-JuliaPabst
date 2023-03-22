@@ -79,14 +79,6 @@ fetch(searchApiUrl)
             
             }
         });
-
-        // console.log(data);
-
-        // insertCelsius(data.current.feelslike_c, data.location.name, image);
-
-        // console.log(data.location.name);
-
-        // console.log(data.current.feelslike_c);
     });
 
 // // replace YOUR_API_KEY with your Weather API key
