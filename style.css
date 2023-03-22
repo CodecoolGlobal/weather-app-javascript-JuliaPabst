@@ -1,4 +1,4 @@
-input{
+input {
     text-align: center;
     display: block;
     margin: auto;
@@ -6,7 +6,7 @@ input{
     top: 10%;
     left: 45%;
 }
-  
+
 body {
     background: rgb(142, 211, 204);
     position: relative;
@@ -52,6 +52,7 @@ body {
     from {
         transform: rotate(0deg);
     }
+
     from {
         transform: rotate(360deg);
     }
@@ -59,8 +60,8 @@ body {
 
 h1 {
     position: relative;
-    font-size: 400%;
-    top: 300px;
+    font-size: 500%;
+    top: 340px;
 }
 
 img {
@@ -71,8 +72,14 @@ img {
     height: 9%;
 }
 
-#celsius {
+#temps {
     position: relative;
     font-size: 400%;
     top: 350px;
+}
+
+#other {
+    position: relative;
+    font-size: 200%;
+    top: 365px;
 }

@@ -35,12 +35,21 @@ const insertWeatherData = (weatherInCelsius, weatherInFahrenheit, name, url) => 
     countryName.setAttribute("class", "location");
     chosenWeather.appendChild(countryName);
 
-    const div = document.createElement("div");
-    div.setAttribute("id", "celsius");
-    div.setAttribute("class", "temp");
-    div.innerText = `${weatherInCelsius}° C | ${weatherInFahrenheit}° F`;
+    const temperatureInfo = document.createElement("div");
+    temperatureInfo.setAttribute("id", "temps");
+    temperatureInfo.setAttribute("class", "temp");
+    temperatureInfo.innerText = `${weatherInCelsius}° C | ${weatherInFahrenheit}° F`;
 
-    chosenWeather.appendChild(div);
+    chosenWeather.appendChild(temperatureInfo);
+
+};
+const insertAdditionalLocationData = (humidity, uv, windSpeed, windDirection) => {
+    const otherInfo = document.createElement("div");
+    otherInfo.setAttribute("id", "other");
+    otherInfo.setAttribute("class", "otherInfo");
+    otherInfo.innerText = `Humidity: ${humidity} | UV: ${uv} | Wind: ${windSpeed}km/h (${windDirection})`;
+
+    chosenWeather.appendChild(otherInfo);
 };
 
 fetch(searchApiUrl)
@@ -68,13 +77,14 @@ fetch(searchApiUrl)
                 fetch(currentApiUrl + event.target.value)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data.current.feelslike_f);
+                        console.log(data.current);
 
                         const image = "https:" + data.current.condition.icon;
                         console.log(data.current.condition)
 
                         chosenWeather.replaceChildren();
                         insertWeatherData(data.current.feelslike_c, data.current.feelslike_f, data.location.name, image);
+                        insertAdditionalLocationData(data.current.humidity, data.current.uv, data.current.wind_kph, data.current.wind_dir);
                     })
             }
         });
