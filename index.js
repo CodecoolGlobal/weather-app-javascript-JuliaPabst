@@ -102,7 +102,3 @@ fetch(searchApiUrl)
 window.addEventListener("load", event => {
     input.value = '';
 });
-
-window.addEventListener("click", event => {
-    console.log(event.target);
-});
