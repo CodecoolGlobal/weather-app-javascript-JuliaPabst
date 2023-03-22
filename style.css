@@ -1,16 +1,78 @@
-body {
-    text-align: center;
-    display: block;
-    margin: auto;
-}
-
 input{
     text-align: center;
     display: block;
     margin: auto;
+    position: absolute;
+    top: 10%;
+    left: 45%;
+}
+  
+body {
+    background: rgb(142, 211, 204);
+    position: relative;
+    display: block;
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100vh;
+    width: 100vw;
 }
 
-label {
-    text-align: center;
-    display: block;
+.wave {
+    opacity: 0.1;
+    position: absolute;
+    top: 50%;
+    left: 42%;
+    background: white;
+    width: 800px;
+    height: 800px;
+    margin-left: -250px;
+    margin-top: -250px;
+    transform-origin: 50% 48%;
+    border-radius: 43%;
+    animation: drift 3000ms infinite linear;
+    /* z-index: 1; */
+}
+
+.wave.-three {
+    animation: drift 5000ms infinite linear;
+    /* z-index: 2 !important; */
+    opacity: 0.2;
+}
+
+.wave.-two {
+    animation: drift 7000ms infinite linear;
+    opacity: 0.1;
+    /* z-index: 3 !important; */
+}
+
+@keyframes drift {
+    from {
+        transform: rotate(0deg);
+    }
+    from {
+        transform: rotate(360deg);
+    }
+}
+
+h1 {
+    position: relative;
+    font-size: 400%;
+    top: 300px;
+}
+
+img {
+    position: relative;
+    top: 300px;
+    left: -10px;
+    width: 9%;
+    height: 9%;
+}
+
+#celsius {
+    position: relative;
+    font-size: 400%;
+    top: 350px;
 }

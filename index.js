@@ -1,6 +1,11 @@
 const root = document.querySelector("#root");
 const input = document.querySelector("input");
-let sellectedCountry = 'Vienna';
+const chosenWeather = document.getElementById("chosen-weather");
+let selectedCity = 'Vie';
+const apiKey = "ef3f93021b5549f6866100215232103";
+const searchApiUrl = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=`;
+const currentApiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=`;
+const datalistCities = document.getElementById("cities");
 
 const createFormWithInput = (cityName) => {
     const option = document.createElement("option");
@@ -14,56 +19,97 @@ const insertOptionElement = (cityName) => {
     cities.appendChild(createFormWithInput(cityName));
 };
 
-const cityNames = cities.map(city => city.name);
-cityNames.forEach(city => {
-    insertOptionElement(city);
-});
+// const cityNames = new Set(cities.map(city => city.name));
+
+// console.log(cityNames);
+// cityNames.forEach(city => {
+//     insertOptionElement(city);
+// });
 
 const createImage = (url) => {
     const img = document.createElement("img");
     img.src = url;
 
-    root.appendChild(img);
+    chosenWeather.appendChild(img);
 };
 
-const insertCelsius = (watherInCelsius, name, url) => {
+const insertWeatherData = (weatherInCelsius, weatherInFahrenheit, name, url) => {
+    
+    createImage(url);
+    
     const countryName = document.createElement("h1");
     countryName.innerText = name;
-    root.appendChild(countryName);
-
-    createImage(url);
+    countryName.setAttribute("class", "location");
+    chosenWeather.appendChild(countryName);
 
     const div = document.createElement("div");
     div.setAttribute("id", "celsius");
-    div.innerText = `${watherInCelsius} °Celsius`
+    div.setAttribute("class", "temp");
+    div.innerText = `${weatherInCelsius}° C | ${weatherInFahrenheit}° F`;
 
-    root.appendChild(div);
+    chosenWeather.appendChild(div);
 };
 
-fetch(`https://api.weatherapi.com/v1/current.json?key=ef3f93021b5549f6866100215232103&q=${sellectedCountry}`)
+// input.addEventListener("keypress", event => {
+        
+//     if(event.key === "Enter") {
+//         selectedCity = event.target.value;
+//         document.querySelector("h1").remove();
+//         document.querySelector("#celsius").remove();
+//         document.querySelector("img").remove();
+
+//         fetch(`https://api.weatherapi.com/v1/current.json?key=ef3f93021b5549f6866100215232103&q=${selectedCity}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             const image = "https:" + data.current.condition.icon
+
+//             insertWeatherData(data.current.feelslike_c, data.location.name, image);
+//         });
+//     }
+// });
+
+
+
+fetch(searchApiUrl)
     .then(response => response.json())
     .then(data => {
-        const image = "https:" + data.current.condition.icon
 
-        insertCelsius(data.current.feelslike_c, data.location.name, image);
-
-        input.addEventListener("keypress", event => {
-
-            if(event.key === "Enter") {
-                sellectedCountry = event.target.value;
-                document.querySelector("h1").remove();
-                document.querySelector("#celsius").remove();
-                document.querySelector("img").remove();
-
-                fetch(`https://api.weatherapi.com/v1/current.json?key=ef3f93021b5549f6866100215232103&q=${sellectedCountry}`)
+        input.addEventListener("input", event => {
+            let selectedCity = event.target.value;
+            console.log(event.target.value);
+            fetch(searchApiUrl + selectedCity)
                 .then(response => response.json())
                 .then(data => {
-                    const image = "https:" + data.current.condition.icon
+                    datalistCities.replaceChildren();
+                    if( data.length > 0) {
+                        data.forEach(city => {
+                            console.log(city.name);
+                            insertOptionElement(city.name);
+                        });
+                    }
+                })
+        })
 
-                    insertCelsius(data.current.feelslike_c, data.location.name, image);
-                });
+        input.addEventListener("keypress", event => {
+            if(event.key === "Enter") {
+                fetch(currentApiUrl + event.target.value)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.current.feelslike_f);
+
+                        const image = "https:" + data.current.condition.icon;
+                        console.log(data.current.condition)
+
+                        chosenWeather.replaceChildren();
+                        insertWeatherData(data.current.feelslike_c, data.current.feelslike_f, data.location.name, image);
+                    })
+            
             }
         });
+
+        // console.log(data);
+
+        // insertCelsius(data.current.feelslike_c, data.location.name, image);
 
         // console.log(data.location.name);
 
@@ -71,10 +117,10 @@ fetch(`https://api.weatherapi.com/v1/current.json?key=ef3f93021b5549f68661002152
     });
 
 // // replace YOUR_API_KEY with your Weather API key
-// const API_KEY = "ef3f93021b5549f6866100215232103";
+
 
 // // construct the API URL for city search
-// const API_URL = `https://api.weatherapi.com/v1/search.json?key=${API_KEY}&q=*&format=JSON`;
+
 
 // // fetch the list of cities
 // fetch(API_URL)

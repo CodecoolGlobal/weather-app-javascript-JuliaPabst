@@ -11,13 +11,21 @@
   </head>
   <body>
     <div id="root">
-      <label for="city-choice">Choose a City:</label>
-      <input list="cities" id="city-of-choice" name="city-name-choice">
-  
-      <datalist id="cities">
-  
-      </datalist>  
 
+      <!-- <label for="city-choice">Choose a City:</label> -->
+      <input list="cities" id="city-of-choice" name="city-name-choice" minlength="3" placeholder="Choose a City">
+      <datalist id="cities">
+
+      </datalist>    
+      <div class='wave -one'></div>
+      <div class='wave -two'></div>
+      <div class='wave -three'></div>
+      <div class="weathercon"><i class='fas fa-sun' style='color: #d36326;'></i></div>
+      
+      <div id="chosen-weather">
+
+      </div>
+      
     </div>
   </body>
 </html>
