@@ -97,7 +97,7 @@ fetch(searchApiUrl)
 //   .catch(error => {
 //     // handle errors
 //     console.error(error);
-//   });
+
 
 window.addEventListener("load", event => {
     input.value = '';
