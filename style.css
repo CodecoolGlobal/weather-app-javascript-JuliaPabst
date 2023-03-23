@@ -1,100 +1,96 @@
 body {
-    background: rgb(124, 232, 246) no-repeat center fixed;
-    position: relative;
-    background-size: cover;
-    display: block;
-    text-align: center;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    font-family: Arial, Helvetica, sans-serif;
-    color: rgb(57, 43, 66);
-    /* HIER KANNST DU DIE FONT-COLOR ÄNDERN*/
+  background: rgb(124, 232, 246) no-repeat center fixed;
+  position: relative;
+  background-size: cover;
+  display: block;
+  text-align: center;
+  margin: auto;
+  justify-content: center;
+  font-family: Poppins;
+  color: white;
+  text-shadow: 5px 5px 100px rgb(43, 43, 43);
+  /* HIER KANNST DU DIE FONT-COLOR ÄNDERN*/
 }
 
 input {
-    text-align: center;
-    display: block;
-    margin: auto;
-    position: absolute;
-    top: 10%;
-    left: 45%;
-    border: 10px;
-    border-radius: 4px;
-    transition: width 0.4s ease-in-out;
-    /* EVTL. MIT DER TRANSITION-ANIM SPIELEN, SO WIE DIE GRÖßE DER TEXTBOX ÄNDERN*/
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  font-size: 150%;
+  color: grey;
+  margin: 0 auto;
+  position: relative;
+  top: 250px;
+  border: 10px;
+  border-radius: 4px;
+  transition: width 0.4s ease-in-out;
+  background-color: white;
+  z-index: 5;
+  /* EVTL. MIT DER TRANSITION-ANIM SPIELEN, SO WIE DIE GRÖßE DER TEXTBOX ÄNDERN*/
+}
+
+input:focus {
+  outline: none;
 }
 
 .wave {
-    opacity: 0.1;
-    position: absolute;
-    top: 450px;
-    left: 42%;
-    background: rgb(255, 248, 215);
-    width: 800px;
-    height: 800px;
-    margin-left: -250px;
-    margin-top: -250px;
-    transform-origin: 50% 48%;
-    border-radius: 43%;
-    animation: drift 3000ms infinite linear;
+  opacity: 0.2;
+  position: absolute;
+  top: 600px;
+  left: 5%;
+  background: rgb(232, 232, 232);
+  width: 2000px;
+  height: 2000px;
+  margin-left: -250px;
+  margin-top: -250px;
+  transform-origin: 50% 48%;
+  border-radius: 43%;
+  animation: drift 8000ms infinite linear;
 }
 
 .wave.-three {
-    animation: drift 5000ms infinite linear;
-    opacity: 0.2;
+  animation: drift 7500ms infinite linear;
+  opacity: 0.3;
 }
 
 .wave.-two {
-    animation: drift 7000ms infinite linear;
-    opacity: 0.1;
+  animation: drift 7750ms infinite linear;
+  opacity: 0.2;
 }
 
 @keyframes drift {
-    from {
-        transform: rotate(0deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
 
-    from {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(360deg);
+  }
 }
 
 h1 {
-    position: relative;
-    font-size: 500%;
-    top: 340px;
+  position: relative;
+  font-size: 1000%;
+  top: 130px;
+  font-weight: 700;
 }
 
 #temps {
-    position: relative;
-    font-size: 400%;
-    top: 350px;
+  position: relative;
+  font-size: 700%;
+  top: 40px;
+  font-weight: 300;
 }
 
 #other {
-    position: relative;
-    font-size: 200%;
-    top: 365px;
+  position: relative;
+  font-size: 300%;
+  top: -180px;
 }
 
-
-.divInDiv {
-    flex:  1; 
-}
-
-img {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  z-index: -1;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
+hr {
+  border-top: 3px solid #ffffff;
+  position: relative;
+  top: -20px;
 }
