@@ -31,16 +31,16 @@ const clearInputField = () => {
     input.value = "";
 };
 
-const createFormWithInput = (cityName) => {
+const createOptionElement = (cityName) => {
     const option = document.createElement("option");
     option.setAttribute("value", cityName);
 
     return option;
 };
 
-const insertOptionElements = (cityName) => {
+const insertOptionElement = (cityName) => {
     const cities = document.getElementById("cities");
-    cities.appendChild(createFormWithInput(cityName));
+    cities.appendChild(createOptionElement(cityName));
 };
 
 const insertWeatherData = (weatherInCelsius, weatherInFahrenheit, name) => {
@@ -81,7 +81,7 @@ fetch(searchApiUrl)
                 deleteOptionElements();
                 if (data.length > 0) {
                     data.forEach((city) => {
-                    insertOptionElements(city.name);
+                    insertOptionElement(city.name);
                     });
                 }
                 });
