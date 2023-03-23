@@ -120,5 +120,5 @@ fetch(searchApiUrl)
     });
 
 window.addEventListener("load", _ => {
-    input.value = "";
+    clearInputField();
 });
