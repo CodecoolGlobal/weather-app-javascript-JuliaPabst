@@ -1,14 +1,18 @@
+// Queryselectors
 const root = document.querySelector("#root");
 const input = document.querySelector("input");
+const body = document.querySelector("body");
+const datalistCities = document.getElementById("cities");
 const chosenWeather = document.getElementById("chosen-weather");
+const backgroundImg = document.querySelector("#backgroundImg");
+
+// API Keys
 const apiKey = "ef3f93021b5549f6866100215232103";
 const searchApiUrl = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=`;
 const currentApiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=`;
-const datalistCities = document.getElementById("cities");
-let selectedCity = 'Vie';
 const pexelsApiKey = "uwcHOUHm37YDeAWCiRkUhKxaBNBKN0HvGcxtZlb1Y7h7EfGRX7PK0dbK";
-const backgroundImg = document.querySelector("#backgroundImg");
-const body = document.querySelector("body");
+
+let selectedCity = 'Vie';
 
 
 const createFormWithInput = (cityName) => {
@@ -98,25 +102,6 @@ fetch(searchApiUrl)
             }
         });
     });
-
-
-// // replace YOUR_API_KEY with your Weather API key
-
-
-// // construct the API URL for city search
-
-
-// // fetch the list of cities
-// fetch(API_URL)
-//   .then(response => response.json())
-//   .then(data => {
-//     // do something with the list of cities
-//     console.log(data);
-//   })
-//   .catch(error => {
-//     // handle errors
-//     console.error(error);
-
 
 window.addEventListener("load", event => {
     input.value = '';

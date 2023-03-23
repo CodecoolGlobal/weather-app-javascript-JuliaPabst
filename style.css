@@ -35,19 +35,16 @@ input {
     transform-origin: 50% 48%;
     border-radius: 43%;
     animation: drift 3000ms infinite linear;
-    /* z-index: 1; */
 }
 
 .wave.-three {
     animation: drift 5000ms infinite linear;
-    /* z-index: 2 !important; */
     opacity: 0.2;
 }
 
 .wave.-two {
     animation: drift 7000ms infinite linear;
     opacity: 0.1;
-    /* z-index: 3 !important; */
 }
 
 @keyframes drift {
@@ -66,7 +63,6 @@ h1 {
     top: 340px;
 }
 
-
 #temps {
     position: relative;
     font-size: 400%;
@@ -77,20 +73,4 @@ h1 {
     position: relative;
     font-size: 200%;
     top: 365px;
-}
-
-/* #bg-img {
-    position:absolute;
-    z-index: -1;
-    width: 1920px;
-    height: 1080px;
-    object-fit: cover;
-} */
-
-img {
-    position: relative;
-    top: 300px;
-    left: -10px;
-    width: 9%;
-    height: 9%;
 }
