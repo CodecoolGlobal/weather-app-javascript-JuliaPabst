@@ -30,9 +30,7 @@ const createImage = (url) => {
     chosenWeather.appendChild(img);
 };
 
-const insertWeatherData = (weatherInCelsius, weatherInFahrenheit, name, url) => {
-    
-    createImage(url);
+const insertWeatherData = (weatherInCelsius, weatherInFahrenheit, name) => {
     
     const countryName = document.createElement("h1");
     countryName.innerText = name;
@@ -45,8 +43,8 @@ const insertWeatherData = (weatherInCelsius, weatherInFahrenheit, name, url) => 
     temperatureInfo.innerText = `${weatherInCelsius}° C | ${weatherInFahrenheit}° F`;
 
     chosenWeather.appendChild(temperatureInfo);
-
 };
+
 const insertAdditionalLocationData = (humidity, uv, windSpeed, windDirection) => {
     const otherInfo = document.createElement("div");
     otherInfo.setAttribute("id", "other");
@@ -77,31 +75,23 @@ fetch(searchApiUrl)
 
         input.addEventListener("keypress", event => {
             if(event.key === "Enter") {
-                let cityName;
                 fetch(currentApiUrl + event.target.value)
                     .then(response => response.json())
                     .then(data => {
-                        cityName = data.location.name; 
+                        const cityName = data.location.name; 
 
-                        const image = "https:" + data.current.condition.icon;
+                        // const image = "https:" + data.current.condition.icon;
 
                         fetch(`https://api.pexels.com/v1/search?query=${cityName}`, {headers:{Authorization: pexelsApiKey}})
                             .then(response => response.json())
                             .then(data => {
                                 const cityImage = data.photos[0].src.landscape; 
-                                console.log(data);
         
-                                console.log(cityImage);
                                 body.setAttribute("style", `background-image: url(${cityImage})`);
-                                
-                                // const img = document.createElement("img");
-                                // img.setAttribute("src", cityImage);
-                                // img.setAttribute("class", "bg-img");
-                                // backgroundImg.appendChild(img);
                         });
 
                         chosenWeather.replaceChildren();
-                        insertWeatherData(data.current.feelslike_c, data.current.feelslike_f, data.location.name, image);
+                        insertWeatherData(data.current.feelslike_c, data.current.feelslike_f, data.location.name);
                         insertAdditionalLocationData(data.current.humidity, data.current.uv, data.current.wind_kph, data.current.wind_dir);
                     })
 
