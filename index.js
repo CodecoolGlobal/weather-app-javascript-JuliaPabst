@@ -6,6 +6,10 @@ const searchApiUrl = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=
 const currentApiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=`;
 const datalistCities = document.getElementById("cities");
 let selectedCity = 'Vie';
+const pexelsApiKey = "uwcHOUHm37YDeAWCiRkUhKxaBNBKN0HvGcxtZlb1Y7h7EfGRX7PK0dbK";
+const backgroundImg = document.querySelector("#backgroundImg");
+const body = document.querySelector("body");
+
 
 const createFormWithInput = (cityName) => {
     const option = document.createElement("option");
@@ -58,14 +62,13 @@ fetch(searchApiUrl)
 
         input.addEventListener("input", event => {
             let selectedCity = event.target.value;
-            console.log(event.target.value);
+
             fetch(searchApiUrl + selectedCity)
                 .then(response => response.json())
                 .then(data => {
                     datalistCities.replaceChildren();
                     if( data.length > 0) {
                         data.forEach(city => {
-                            console.log(city.name);
                             insertOptionElement(city.name);
                         });
                     }
@@ -74,21 +77,38 @@ fetch(searchApiUrl)
 
         input.addEventListener("keypress", event => {
             if(event.key === "Enter") {
+                let cityName;
                 fetch(currentApiUrl + event.target.value)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data.current);
+                        cityName = data.location.name; 
 
                         const image = "https:" + data.current.condition.icon;
-                        console.log(data.current.condition)
+
+                        fetch(`https://api.pexels.com/v1/search?query=${cityName}`, {headers:{Authorization: pexelsApiKey}})
+                            .then(response => response.json())
+                            .then(data => {
+                                const cityImage = data.photos[0].src.landscape; 
+                                console.log(data);
+        
+                                console.log(cityImage);
+                                body.setAttribute("style", `background-image: url(${cityImage})`);
+                                
+                                // const img = document.createElement("img");
+                                // img.setAttribute("src", cityImage);
+                                // img.setAttribute("class", "bg-img");
+                                // backgroundImg.appendChild(img);
+                        });
 
                         chosenWeather.replaceChildren();
                         insertWeatherData(data.current.feelslike_c, data.current.feelslike_f, data.location.name, image);
                         insertAdditionalLocationData(data.current.humidity, data.current.uv, data.current.wind_kph, data.current.wind_dir);
                     })
+
             }
         });
     });
+
 
 // // replace YOUR_API_KEY with your Weather API key
 
