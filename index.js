@@ -14,7 +14,6 @@ const pexelsApiKey = "uwcHOUHm37YDeAWCiRkUhKxaBNBKN0HvGcxtZlb1Y7h7EfGRX7PK0dbK";
 
 let selectedCity = 'Vie';
 
-
 const createFormWithInput = (cityName) => {
     const option = document.createElement("option");
     option.setAttribute("value", cityName);
@@ -84,7 +83,7 @@ fetch(searchApiUrl)
                     .then(data => {
                         const cityName = data.location.name; 
 
-                        // const image = "https:" + data.current.condition.icon;
+                        // const image = "https:" + data.current.condition.icon; ==> TODO: EVTL. ERSETZEN MIT ICONS VIA DISCORD-LINK
 
                         fetch(`https://api.pexels.com/v1/search?query=${cityName}`, {headers:{Authorization: pexelsApiKey}})
                             .then(response => response.json())
@@ -98,7 +97,6 @@ fetch(searchApiUrl)
                         insertWeatherData(data.current.feelslike_c, data.current.feelslike_f, data.location.name);
                         insertAdditionalLocationData(data.current.humidity, data.current.uv, data.current.wind_kph, data.current.wind_dir);
                     })
-
             }
         });
     });
