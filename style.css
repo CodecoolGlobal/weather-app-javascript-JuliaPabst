@@ -9,7 +9,6 @@ body {
   font-family: Poppins;
   color: white;
   text-shadow: 5px 5px 100px rgb(43, 43, 43);
-  /* HIER KANNST DU DIE FONT-COLOR ÄNDERN*/
 }
 
 input {
@@ -27,7 +26,6 @@ input {
   transition: width 0.4s ease-in-out;
   background-color: white;
   z-index: 5;
-  /* EVTL. MIT DER TRANSITION-ANIM SPIELEN, SO WIE DIE GRÖßE DER TEXTBOX ÄNDERN*/
 }
 
 input:focus {
