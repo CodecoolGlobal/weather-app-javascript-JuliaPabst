@@ -12,20 +12,18 @@ body {
 }
 
 input {
+  color: rgb(255, 255, 255);
+  background-color: rgb(109, 83, 83);
   display: block;
-  margin-right: auto;
-  margin-left: auto;
+  position: relative;
   text-align: center;
   font-size: 150%;
-  color: grey;
-  margin: 0 auto;
-  position: relative;
   top: 250px;
+  margin: auto;
   border: 10px;
   border-radius: 4px;
-  transition: width 0.4s ease-in-out;
-  background-color: white;
   z-index: 5;
+  transition: width 0.4s ease-in-out;
 }
 
 input:focus {
