@@ -11,115 +11,114 @@ const apiKey = "ef3f93021b5549f6866100215232103";
 const searchApiUrl = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=`;
 const currentApiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=`;
 const pexelsApiKey = "uwcHOUHm37YDeAWCiRkUhKxaBNBKN0HvGcxtZlb1Y7h7EfGRX7PK0dbK";
+const authorization = { headers: { Authorization: pexelsApiKey }};
 
-let selectedCity = "Vie";
+let selectedCity;
+
+const changeBackgroundImageTo = (image) => {
+    body.setAttribute("style", `background-image: url(${image})`);
+};
+
+const deleteWeatherData = () => {
+    chosenWeather.replaceChildren();
+};
+
+const deleteOptionElements = () => {
+    datalistCities.replaceChildren();
+};
+
+const clearInputField = () => {
+    input.value = "";
+};
 
 const createFormWithInput = (cityName) => {
-  const option = document.createElement("option");
-  option.setAttribute("value", cityName);
+    const option = document.createElement("option");
+    option.setAttribute("value", cityName);
 
-  return option;
+    return option;
 };
 
-const insertOptionElement = (cityName) => {
-  const cities = document.getElementById("cities");
-  cities.appendChild(createFormWithInput(cityName));
-};
-
-const createImage = (url) => {
-  const img = document.createElement("img");
-  img.src = url;
-
-  chosenWeather.appendChild(img);
+const insertOptionElements = (cityName) => {
+    const cities = document.getElementById("cities");
+    cities.appendChild(createFormWithInput(cityName));
 };
 
 const insertWeatherData = (weatherInCelsius, weatherInFahrenheit, name) => {
-  const countryName = document.createElement("h1");
-  countryName.innerText = name;
-  countryName.setAttribute("class", "location");
-  chosenWeather.appendChild(countryName);
+    const countryName = document.createElement("h1");
+    countryName.innerText = name;
+    countryName.setAttribute("class", "location");
+    chosenWeather.appendChild(countryName);
 
-  const temperatureInfo = document.createElement("div");
-  temperatureInfo.setAttribute("id", "temps");
-  temperatureInfo.setAttribute("class", "temp");
-  const lineBreak = document.createElement("hr");
-  temperatureInfo.innerText = `${weatherInCelsius}° C | ${weatherInFahrenheit}° F`;
-
-  chosenWeather.appendChild(lineBreak);
-  chosenWeather.appendChild(temperatureInfo);
+    const temperatureInfo = document.createElement("div");
+    temperatureInfo.setAttribute("id", "temps");
+    temperatureInfo.setAttribute("class", "temp");
+    temperatureInfo.innerText = `${weatherInCelsius}° C | ${weatherInFahrenheit}° F`;
+    chosenWeather.appendChild(temperatureInfo);
+    
+    const lineBreak = document.createElement("hr");
+    chosenWeather.appendChild(lineBreak);
 };
 
-const insertAdditionalLocationData = (
-  humidity,
-  uv,
-  windSpeed,
-  windDirection
-) => {
-  const otherInfo = document.createElement("div");
-  otherInfo.setAttribute("id", "other");
-  otherInfo.setAttribute("class", "otherInfo");
-  otherInfo.innerText = `Humidity: ${humidity} | UV: ${uv}| Wind: ${windSpeed}km/h (${windDirection})`;
+const insertAdditionalLocationData = (humidity, uv, windSpeed, windDirection) => {
+    const otherInfo = document.createElement("div");
+    otherInfo.setAttribute("id", "other");
+    otherInfo.setAttribute("class", "otherInfo");
+    otherInfo.innerText = `Humidity: ${humidity} | UV: ${uv}| Wind: ${windSpeed}km/h (${windDirection})`;
 
-  chosenWeather.appendChild(otherInfo);
+    chosenWeather.appendChild(otherInfo);
 };
 
 fetch(searchApiUrl)
-  .then((response) => response.json())
-  .then((data) => {
-    input.addEventListener("input", (event) => {
-      let selectedCity = event.target.value;
+    .then(response => response.json())
+    .then(data => {
+        input.addEventListener("input", event => {
 
-      fetch(searchApiUrl + selectedCity)
-        .then((response) => response.json())
-        .then((data) => {
-          datalistCities.replaceChildren();
-          if (data.length > 0) {
-            data.forEach((city) => {
-              insertOptionElement(city.name);
+        let selectedCity = event.target.value;
+
+        fetch(searchApiUrl + selectedCity)
+            .then(response => response.json())
+            .then(data => {
+                deleteOptionElements();
+                if (data.length > 0) {
+                    data.forEach((city) => {
+                    insertOptionElements(city.name);
+                    });
+                }
+                });
+        });
+
+        input.addEventListener("keypress", event => {
+
+        if (event.key === "Enter") {
+            fetch(currentApiUrl + event.target.value)
+            .then(response => response.json())
+            .then(data => {
+                const cityName = data.location.name;
+                const currentData = data.current;
+                const feelsLikeC = currentData.feelslike_c;
+                const feelsLikeF = currentData.feelslike_f;
+                const humidity = currentData.humidity;
+                const uv = currentData.uv;
+                const windKph = currentData.wind_kph;
+                const windDir = currentData.wind_dir;
+
+                fetch(`https://api.pexels.com/v1/search?query=${cityName}`, authorization)
+                .then(response => response.json())
+                .then(data => {
+                    const currentCityImage = data.photos[0].src.landscape;
+
+                    changeBackgroundImageTo(currentCityImage);
+                });
+
+                deleteWeatherData();
+                insertWeatherData(feelsLikeC, feelsLikeF, cityName);
+                insertAdditionalLocationData(humidity, uv, windKph, windDir);
+                clearInputField();
             });
-          }
+        }
         });
     });
 
-    input.addEventListener("keypress", (event) => {
-      if (event.key === "Enter") {
-        fetch(currentApiUrl + event.target.value)
-          .then((response) => response.json())
-          .then((data) => {
-            const cityName = data.location.name;
-
-            // const image = "https:" + data.current.condition.icon; ==> TODO: EVTL. ERSETZEN MIT ICONS VIA DISCORD-LINK
-
-            fetch(`https://api.pexels.com/v1/search?query=${cityName}`, {
-              headers: { Authorization: pexelsApiKey },
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                const cityImage = data.photos[0].src.landscape;
-
-                body.setAttribute(
-                  "style",
-                  `background-image: url(${cityImage})`
-                );
-              });
-
-            chosenWeather.replaceChildren();
-            insertWeatherData(
-              data.current.feelslike_c,
-              data.current.feelslike_f,
-              data.location.name
-            );
-            insertAdditionalLocationData(
-              data.current.humidity,
-              data.current.uv,
-              data.current.wind_kph,
-              data.current.wind_dir
-            );
-          });
-      }
-    });
-  });
-
-window.addEventListener("load", (event) => {
-  input.value = "";
+window.addEventListener("load", _ => {
+    input.value = "";
 });
